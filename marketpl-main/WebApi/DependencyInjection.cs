@@ -1,3 +1,4 @@
+using Business.Auth;
 using Business.Common.Mapping;
 using Data.Data;
 using Data.Interfaces;
@@ -36,7 +37,7 @@ public static class DependencyInjection
         });
         return services;
     }
-    public static IServiceCollection AddAuthentication(this IServiceCollection services)
+    public static IServiceCollection AddMyAuthentication(this IServiceCollection services)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

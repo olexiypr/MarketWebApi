@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace WebApi.Auth;
+namespace Business.Auth;
 
 public class AuthOptions
 {

@@ -26,7 +26,6 @@ public class ProductsController : BaseController
     public ProductsController(IMapper mapper) 
         => (_mapper) = (mapper);
     [HttpGet]
-    [Authorize]
     public async Task<ActionResult<ProductsVm>> GetAllProducts([FromQuery]FilterModel filter)
     {
         var query = _mapper.Map<GetAllProductsQuery>(filter);
@@ -46,7 +45,7 @@ public class ProductsController : BaseController
     }
     
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public async Task<ActionResult<Product>> AddProduct([FromBody] AddProductDto addProductDto)
     {
         var command = _mapper.Map<AddProductCommand>(addProductDto);
@@ -54,7 +53,7 @@ public class ProductsController : BaseController
         return Ok(result);
     }
     [HttpPut("{id:int}")]
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public async Task<ActionResult<Product>> UpdateProduct(int id, [FromBody] UpdateProductDto updateProductDto)
     {
         var command = _mapper.Map<UpdateProductCommand>(updateProductDto);
@@ -64,7 +63,7 @@ public class ProductsController : BaseController
     }
 
     [HttpDelete("{id:int}")]
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public async Task<ActionResult> DeleteProduct(int id)
     {
         var command = new DeleteProductCommand

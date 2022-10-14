@@ -1,5 +1,6 @@
 using System;
 using AutoMapper;
+using Business.Auth;
 using Business.Commands.AddCommands.AddProduct;
 using Business.Commands.Queries.GetAllProducts;
 using Business.Commands.UpdateProduct;
@@ -44,5 +45,11 @@ public class AssemblyMappingProfile : Profile
                     model.CategoryId == null ? null : 
                     new Func<Product, bool>(product =>
                         product.Price < model.MaxPrice && product.Price > model.MinPrice && product.ProductCategoryId == model.CategoryId)));
+
+        CreateMap<UserModel, IdentityCommand>()
+            .ForMember(command => command.Login,
+                opt => opt.MapFrom(model => model.Login))
+            .ForMember(command => command.Password,
+                opt => opt.MapFrom(model => model.Password));
     }
 }
