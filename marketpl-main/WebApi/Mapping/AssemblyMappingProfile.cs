@@ -1,6 +1,7 @@
 using System;
 using AutoMapper;
 using Business.Auth;
+using Business.Auth.Register;
 using Business.Commands.AddCommands.AddProduct;
 using Business.Commands.Queries.GetAllProducts;
 using Business.Commands.UpdateProduct;
@@ -51,5 +52,19 @@ public class AssemblyMappingProfile : Profile
                 opt => opt.MapFrom(model => model.Login))
             .ForMember(command => command.Password,
                 opt => opt.MapFrom(model => model.Password));
+
+        CreateMap<RegisterUserModel, RegisterUserCommand>()
+            .ForMember(command => command.Login,
+                opt => opt.MapFrom(model => model.Login))
+            .ForMember(command => command.Password,
+                opt => opt.MapFrom(model => model.Password))
+            .ForMember(command => command.Name,
+                opt => opt.MapFrom(model => model.Name))
+            .ForMember(command => command.Surname,
+                opt => opt.MapFrom(model => model.Surname))
+            .ForMember(command => command.BirthDate,
+                opt => opt.MapFrom(model => model.BirthDate))
+            .ForMember(command => command.Role,
+                opt => opt.MapFrom(model => model.Role ?? "user"));
     }
 }

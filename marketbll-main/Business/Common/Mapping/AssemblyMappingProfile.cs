@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
+using Business.Auth.Register;
 using Business.Commands.AddCommands.AddProduct;
 using Business.Commands.UpdateProduct;
 using Business.Dto;
@@ -54,6 +55,21 @@ namespace Business.Common.Mapping
                     opt => opt.MapFrom(command => command.ProductCategory))
                 .ForMember(product => product.ProductCategoryId,
                     opt => opt.MapFrom(command => command.ProductCategoryId ?? command.ProductCategory.Id));
+
+            CreateMap<RegisterUserCommand, Customer>()
+                .ForMember(customer => customer.Login,
+                    opt => opt.MapFrom(command => command.Login))
+                .ForMember(customer => customer.Password,
+                    opt => opt.MapFrom(command => command.Password))
+                .ForMember(customer => customer.Person,
+                    opt => opt.MapFrom(command => new Person
+                    {
+                        Name = command.Name, 
+                        Surname = command.Surname, 
+                        BirthDate = command.BirthDate
+                    }))
+                .ForMember(customer => customer.Role,
+                    opt => opt.MapFrom(command => command.Role ?? "user"));
         }
     }
 }
